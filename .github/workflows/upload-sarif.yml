@@ -1,0 +1,23 @@
+name: Upload SARIF Results
+
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:  # Позволяет запустить вручную
+
+permissions:
+  security-events: write
+  contents: read
+
+jobs:
+  upload-sarif:
+    name: Upload SARIF to Security
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results_correct.sarif
